@@ -1,7 +1,8 @@
 import { model, Schema } from "mongoose";
 
 import { EGender } from "../enums/gender.enum";
-import {IUser} from "../types/user.type";
+import { EUserStatus } from "../enums/user-status.enum";
+import { IUser } from "../types/user.type";
 
 const userSchema = new Schema(
   {
@@ -23,6 +24,12 @@ const userSchema = new Schema(
       lowercase: true,
       unique: true,
       trim: true,
+    },
+    status: {
+      type: String,
+      enum: EUserStatus,
+      required: true,
+      default: EUserStatus.inactive,
     },
     password: {
       type: String,

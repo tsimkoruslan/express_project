@@ -26,6 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.tokenService = void 0;
 const jwt = __importStar(require("jsonwebtoken"));
 const configs_1 = require("../configs/configs");
+const actionTokenType_enum_1 = require("../enums/actionTokenType.enum");
 const api_error_1 = require("../errors/api.error");
 class TokenService {
     generateTokenPair(payload) {
@@ -49,6 +50,37 @@ class TokenService {
                     break;
                 case "refresh":
                     secret = configs_1.configs.JWT_REFRESH_SECRET;
+                    break;
+            }
+            return jwt.verify(token, secret);
+        }
+        catch (e) {
+            throw new api_error_1.ApiError("Token not valid!", 401);
+        }
+    }
+    generateActionToken(payload, tokenType) {
+        let secret;
+        switch (tokenType) {
+            case actionTokenType_enum_1.EActionTokenType.forgotPassword:
+                secret = configs_1.configs.JWT_FORGOT_SECRET;
+                break;
+            case actionTokenType_enum_1.EActionTokenType.activate:
+                secret = configs_1.configs.JWT_ACTIVATE_SECRET;
+                break;
+        }
+        return jwt.sign(payload, secret, {
+            expiresIn: "1d",
+        });
+    }
+    checkActionToken(token, tokenType) {
+        try {
+            let secret;
+            switch (tokenType) {
+                case actionTokenType_enum_1.EActionTokenType.forgotPassword:
+                    secret = configs_1.configs.JWT_FORGOT_SECRET;
+                    break;
+                case actionTokenType_enum_1.EActionTokenType.activate:
+                    secret = configs_1.configs.JWT_ACTIVATE_SECRET;
                     break;
             }
             return jwt.verify(token, secret);

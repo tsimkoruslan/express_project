@@ -4,8 +4,7 @@ exports.userRepository = void 0;
 const User_model_1 = require("../models/User.model");
 class UserRepository {
     async getAll() {
-        const users = await User_model_1.User.find();
-        return users;
+        return await User_model_1.User.find();
     }
     async getOneByParams(params) {
         return await User_model_1.User.findOne(params);
@@ -23,6 +22,9 @@ class UserRepository {
         return await User_model_1.User.findByIdAndUpdate(userId, dto, {
             returnDocument: "after",
         });
+    }
+    async setStatus(userId, status) {
+        await User_model_1.User.updateOne({ _id: userId }, { $set: { status } });
     }
     async deleteUser(userId) {
         await User_model_1.User.deleteOne({ _id: userId });
