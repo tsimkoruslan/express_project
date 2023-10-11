@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 
 import { ApiError } from "../errors/api.error";
 import { userRepository } from "../repositories/user.repository";
+import {User} from "../models/User.model";
 
 class UserMiddleware {
   public async getByIdOrThrow(req: Request, res: Response, next: NextFunction) {
@@ -34,6 +35,28 @@ class UserMiddleware {
     } catch (e) {
       next(e);
     }
+  }
+
+  public isUserExist<T>(field: keyof T) {
+    return async (
+      req: Request,
+      res: Response,
+      next: NextFunction,
+    ): Promise<void> => {
+      try {
+        const user = await User.findOne({ [field]: req.body[field] }).lean();
+
+        if (!user) {
+          throw new ApiError("User not found", 404);
+        }
+
+        req.res.locals = user;
+
+        next();
+      } catch (e) {
+        next(e);
+      }
+    };
   }
 }
 

@@ -23,6 +23,11 @@ class UserRepository {
             returnDocument: "after",
         });
     }
+    async updateOneById(userId, dto) {
+        return await User_model_1.User.findByIdAndUpdate(userId, dto, {
+            returnDocument: "after",
+        });
+    }
     async setStatus(userId, status) {
         await User_model_1.User.updateOne({ _id: userId }, { $set: { status } });
     }

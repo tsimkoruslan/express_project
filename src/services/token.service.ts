@@ -40,7 +40,7 @@ class TokenService {
   }
 
   public generateActionToken(
-    payload: ITokenPayload,
+    payload: { userId: any },
     tokenType: EActionTokenType,
   ): string {
     let secret: string;

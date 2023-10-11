@@ -1,4 +1,4 @@
-import { FilterQuery, Types } from "mongoose";
+import { FilterQuery } from "mongoose";
 
 import { User } from "../models/User.model";
 import { IUser, IUserCredentials } from "../types/user.type";
@@ -25,6 +25,15 @@ class UserRepository {
   }
 
   public async updateUser(userId: string, dto: Partial<IUser>): Promise<IUser> {
+    return await User.findByIdAndUpdate(userId, dto, {
+      returnDocument: "after",
+    });
+  }
+
+  public async updateOneById(
+    userId: string,
+    dto: Partial<IUser>,
+  ): Promise<IUser> {
     return await User.findByIdAndUpdate(userId, dto, {
       returnDocument: "after",
     });

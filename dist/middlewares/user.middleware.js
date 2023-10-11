@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.userMiddleware = void 0;
 const api_error_1 = require("../errors/api.error");
 const user_repository_1 = require("../repositories/user.repository");
+const User_model_1 = require("../models/User.model");
 class UserMiddleware {
     async getByIdOrThrow(req, res, next) {
         try {
@@ -30,6 +31,21 @@ class UserMiddleware {
         catch (e) {
             next(e);
         }
+    }
+    isUserExist(field) {
+        return async (req, res, next) => {
+            try {
+                const user = await User_model_1.User.findOne({ [field]: req.body[field] }).lean();
+                if (!user) {
+                    throw new api_error_1.ApiError("User not found", 404);
+                }
+                req.res.locals = user;
+                next();
+            }
+            catch (e) {
+                next(e);
+            }
+        };
     }
 }
 exports.userMiddleware = new UserMiddleware();
