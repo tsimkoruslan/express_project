@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 
-import { configs } from "../configs/configs";
+import { configs } from "../configs/config";
 
 class PasswordService {
   public async hash(password: string): Promise<string> {

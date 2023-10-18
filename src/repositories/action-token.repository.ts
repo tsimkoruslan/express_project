@@ -1,4 +1,4 @@
-import { FilterQuery, Types } from "mongoose";
+import { FilterQuery } from "mongoose";
 
 import { EActionTokenType } from "../enums/actionTokenType.enum";
 import { ActionToken } from "../models/ActionToken.model";

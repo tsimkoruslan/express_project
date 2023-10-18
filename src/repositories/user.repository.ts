@@ -5,11 +5,15 @@ import { IUser, IUserCredentials } from "../types/user.type";
 
 class UserRepository {
   public async getAll(): Promise<IUser[]> {
-    return await User.find();
+    const users = await User.find();
+    return users;
   }
 
-  public async getOneByParams(params: FilterQuery<IUser>): Promise<IUser> {
-    return await User.findOne(params);
+  public async getOneByParams(
+    params: FilterQuery<IUser>,
+    selection?: string[],
+  ): Promise<IUser> {
+    return await User.findOne(params, selection);
   }
 
   public async findById(id: string): Promise<IUser> {
@@ -24,12 +28,6 @@ class UserRepository {
     return await User.create(dto);
   }
 
-  public async updateUser(userId: string, dto: Partial<IUser>): Promise<IUser> {
-    return await User.findByIdAndUpdate(userId, dto, {
-      returnDocument: "after",
-    });
-  }
-
   public async updateOneById(
     userId: string,
     dto: Partial<IUser>,
@@ -38,12 +36,43 @@ class UserRepository {
       returnDocument: "after",
     });
   }
+
   public async setStatus(userId: string, status: any): Promise<void> {
     await User.updateOne({ _id: userId }, { $set: { status } });
   }
 
   public async deleteUser(userId: string): Promise<void> {
     await User.deleteOne({ _id: userId });
+  }
+  public async findWithoutActivityAfterDate(date: string): Promise<IUser[]> {
+    return await User.aggregate([
+      {
+        $lookup: {
+          from: "tokens",
+          localField: "_id",
+          foreignField: "_userId",
+          as: "tokens",
+        },
+      },
+      {
+        $match: {
+          tokens: {
+            $not: {
+              $elemMatch: {
+                createdAt: { $gte: date },
+              },
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          email: 1,
+        },
+      },
+    ]);
   }
 }
 

@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 
 import { ApiError } from "../errors/api.error";
+import { User } from "../models/User.model";
 import { userRepository } from "../repositories/user.repository";
-import {User} from "../models/User.model";
 
 class UserMiddleware {
   public async getByIdOrThrow(req: Request, res: Response, next: NextFunction) {

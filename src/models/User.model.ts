@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 
-import { EGender } from "../enums/gender.enum";
+import { EGenders } from "../enums/gender.enum";
 import { EUserStatus } from "../enums/user-status.enum";
 import { IUser } from "../types/user.type";
 
@@ -16,7 +16,13 @@ const userSchema = new Schema(
     },
     genders: {
       type: String,
-      enum: EGender,
+      enum: EGenders,
+    },
+    status: {
+      type: String,
+      enum: EUserStatus,
+      required: true,
+      default: EUserStatus.inactive,
     },
     email: {
       type: String,
@@ -25,14 +31,9 @@ const userSchema = new Schema(
       unique: true,
       trim: true,
     },
-    status: {
-      type: String,
-      enum: EUserStatus,
-      required: true,
-      default: EUserStatus.inactive,
-    },
     password: {
       type: String,
+      select: false,
       required: true,
     },
   },

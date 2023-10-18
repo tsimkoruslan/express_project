@@ -25,6 +25,7 @@ class AuthService {
       const actionToken = tokenService.generateActionToken(
         {
           userId: user._id,
+          name: user.name,
         },
         EActionTokenType.activate,
       );
@@ -44,7 +45,9 @@ class AuthService {
 
   public async login(dto: IUserCredentials): Promise<ITokensPair> {
     try {
-      const user = await userRepository.getOneByParams({ email: dto.email });
+      const user = await userRepository.getOneByParams({ email: dto.email }, [
+        "password",
+      ]);
       if (!user) {
         throw new ApiError("Invalid credentials provided", 401);
       }
@@ -58,7 +61,7 @@ class AuthService {
       }
 
       const tokensPair = tokenService.generateTokenPair({
-        userId: user._id,
+        userId: user._id.toString(),
         name: user.name,
       });
       await tokenRepository.create({ ...tokensPair, _userId: user._id });
@@ -141,6 +144,7 @@ class AuthService {
       const actionToken = tokenService.generateActionToken(
         {
           userId: user._id,
+          name: user.name,
         },
         EActionTokenType.activate,
       );

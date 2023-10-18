@@ -1,10 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 
-import { EEmailAction } from "../enums/email.action.enum";
 import { authService } from "../services/auth.service";
-import { emailService } from "../services/email.service";
 import { ITokenPayload, ITokensPair } from "../types/token.types";
-import {ISetNewPassword, IUser} from "../types/user.type";
+import { ISetNewPassword, IUser } from "../types/user.type";
 
 class AuthController {
   public async register(
@@ -14,7 +12,7 @@ class AuthController {
   ): Promise<Response<void>> {
     try {
       await authService.register(req.body);
-      await emailService.sendMail(req.body.email, EEmailAction.REGISTER);
+
       return res.sendStatus(201);
     } catch (e) {
       next(e);

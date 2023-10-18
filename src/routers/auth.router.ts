@@ -57,4 +57,5 @@ router.post(
   authMiddleware.checkAccessToken,
   authController.setNewPassword,
 );
+
 export const authRouter = router;
