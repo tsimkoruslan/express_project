@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
+import fileUpload from "express-fileupload";
 import * as mongoose from "mongoose";
 import * as swaggerUi from "swagger-ui-express";
 
@@ -14,6 +15,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(fileUpload());
 
 app.use("/users", userRouter);
 app.use("/auth", authRouter);
@@ -34,3 +36,5 @@ app.listen(configs.PORT, async () => {
   cronRunner();
   console.log(`Server has successfully started on PORT ${configs.PORT}`);
 });
+
+// CRUD c - create, r - read, u - update, d - delete

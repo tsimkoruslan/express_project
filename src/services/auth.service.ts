@@ -1,7 +1,6 @@
 import { ObjectId } from "mongodb";
 
 import { EActionTokenType } from "../enums/actionTokenType.enum";
-import { EEmailAction } from "../enums/email.action.enum";
 import { EUserStatus } from "../enums/user-status.enum";
 import { ApiError } from "../errors/api.error";
 import { actionTokenRepository } from "../repositories/action-token.repository";
@@ -9,9 +8,10 @@ import { tokenRepository } from "../repositories/token.repository";
 import { userRepository } from "../repositories/user.repository";
 import { ITokenPayload, ITokensPair } from "../types/token.types";
 import { ISetNewPassword, IUser, IUserCredentials } from "../types/user.type";
-import { emailService } from "./email.service";
 import { passwordService } from "./password.service";
 import { tokenService } from "./token.service";
+import {smsService} from "./sms.service";
+import {prepareSmsService} from "./prepare-sms.service";
 
 class AuthService {
   public async register(dto: IUser): Promise<void> {
@@ -34,10 +34,11 @@ class AuthService {
         type: EActionTokenType.activate,
         _userId: user._id,
       });
-      await emailService.sendMail(dto.email, EEmailAction.REGISTER, {
-        name: dto.name,
-        actionToken,
-      });
+      // await emailService.sendMail(dto.email, EEmailAction.REGISTER, {
+      //   name: dto.name,
+      //   actionToken,
+      // });
+      await prepareSmsService.register(dto.phone, { name: dto.name });
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }
@@ -153,10 +154,10 @@ class AuthService {
         type: EActionTokenType.activate,
         _userId: user._id,
       });
-      await emailService.sendMail(user.email, EEmailAction.REGISTER, {
-        name: user.name,
-        actionToken,
-      });
+      // await emailService.sendMail(user.email, EEmailAction.REGISTER, {
+      //   name: user.name,
+      //   actionToken,
+      // });
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }
@@ -177,9 +178,9 @@ class AuthService {
           type: EActionTokenType.forgotPassword,
           _userId: user._id,
         }),
-        emailService.sendMail(user.email, EEmailAction.FORGOT_PASSWORD, {
-          actionToken,
-        }),
+        // emailService.sendMail(user.email, EEmailAction.FORGOT_PASSWORD, {
+        //   actionToken,
+        // }),
       ]);
     } catch (e) {
       throw new ApiError(e.message, e.status);
