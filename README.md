@@ -1,6 +1,6 @@
-# March 2023 Node Project
+# node_express_project
 
-This is a Node.js project for March 2023. Below, you will find information on how to set up and run the project, as well as the technologies used.
+This is a Node.js project. Below, you will find information on how to set up and run the project, as well as the technologies used.
 
 ## Table of Contents
 - [Setup](#setup)
@@ -13,13 +13,13 @@ To run this project, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/march-2023-node.git
+   git clone https://github.com/your-username/express_project.git
    ```
 
 2. Navigate to the project directory:
 
    ```bash
-   cd march-2023-node
+   cd node_express_project
    ```
 
 3. Install project dependencies:
