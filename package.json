@@ -1,5 +1,5 @@
 {
-  "name": "march-2023-node",
+  "name": "node_express_project",
   "version": "1.0.0",
   "scripts": {
     "start:dev": "rimraf dist && tsc-watch --onSuccess 'npm run watch:server'",
