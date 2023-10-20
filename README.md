@@ -1,78 +1,69 @@
+# March 2023 Node Project
 
-Backend API README
+This is a Node.js project for March 2023. Below, you will find information on how to set up and run the project, as well as the technologies used.
 
-This README provides an overview of the backend API for your project, including technologies used.
-Project Overview
+## Table of Contents
+- [Setup](#setup)
+- [Technologies Used](#technologies-used)
 
-This backend API serves as the core of your application, providing endpoints for user management, authentication, and car-related operations. It uses Node.js with the Express.js framework and a MongoDB database for data storage.
-Technologies Used
+## Setup
 
-    Node.js
-    Express.js
-    MongoDB
-    TypeScript
+To run this project, follow these steps:
 
-API Structure
+1. Clone the repository:
 
-The API is structured into three main modules, each contained in a separate router:
+   ```bash
+   git clone https://github.com/your-username/march-2023-node.git
+   ```
 
-    authRouter: Handles user authentication, registration, and password management.
-    carRouter: Manages car-related operations, such as listing all cars, creating, updating, and deleting cars.
-    userRouter: Provides user management functionality, including user profile retrieval, updates, and deletions.
+2. Navigate to the project directory:
 
-Routes
-Authentication Routes (authRouter)
+   ```bash
+   cd march-2023-node
+   ```
 
-    POST /register: Register a new user.
-    POST /login: Log in a user.
-    POST /refresh: Refresh the user's access token.
-    POST /logout: Log the user out.
-    POST /logout-all: Log the user out from all devices.
-    POST /activate: Activate a user's account.
-    PUT /activate: Complete the user account activation.
-    POST /forgot: Initiate the password reset process.
-    PUT /forgot/:token: Set a new password after a reset request.
-    POST /password: Change the user's password.
+3. Install project dependencies:
 
-Car Routes (carRouter)
+   ```bash
+   npm install
+   ```
 
-    GET /: Retrieve a list of all cars.
-    POST /: Create a new car.
-    GET /:carId: Retrieve a specific car by ID.
-    PUT /:carId: Update a specific car by ID.
-    DELETE /:carId: Delete a specific car by ID.
+4. Start the development server with automatic restart (using nodemon):
 
-User Routes (userRouter)
+   ```bash
+   npm run start:dev
+   ```
 
-    GET /: Retrieve a list of all users.
-    GET /me: Retrieve the user's own profile.
-    GET /:userId: Retrieve a specific user by ID.
-    PUT /:userId: Update a specific user's profile.
-    DELETE /:userId: Delete a specific user by ID.
+The server will start, and you can access it at [http://localhost:3000](http://localhost:3000).
 
-Middleware
+## Technologies Used
 
-Middleware functions are used throughout the API to perform tasks such as request validation, authentication, and user authorization. Some key middleware includes:
+This project uses the following technologies and dependencies:
 
-    commonMiddleware: Contains request validation functions.
-    authMiddleware: Handles authentication and token-related checks.
-    userMiddleware: Provides user-specific checks.
+- **Node.js** - A JavaScript runtime for server-side development.
+- **Express** - A fast and minimalist web framework for Node.js.
+- **Mongoose** - An elegant MongoDB object modeling tool.
+- **JWT (JSON Web Tokens)** - For authentication and authorization.
+- **Bcrypt** - A library for hashing passwords.
+- **Swagger UI Express** - For API documentation.
+- **Nodemailer** - A module for sending emails.
+- **Twilio** - For sending SMS messages.
+- **Cron** - A library for scheduling tasks at specific times.
+- **Day.js** - A minimalist JavaScript library for parsing, formatting, and manipulating dates.
+- **Dotenv** - A zero-dependency module for loading environment variables.
+- **Express-Fileupload** - Middleware for handling file uploads in Express.
+- **Handlebars (HBS)** - A template engine for rendering views.
+- **Joi** - A library for data validation.
 
-Error Handling
+### Development Dependencies:
 
-The API uses a custom error handling middleware to handle errors gracefully. Any errors that occur during request processing are returned as JSON responses with relevant error messages and status codes.
-Database
+- **TypeScript** - A typed superset of JavaScript.
+- **ESLint** - A linter tool for identifying and fixing problems in JavaScript code.
+- **Prettier** - An opinionated code formatter.
+- **Tsc-watch** - A TypeScript compilation tool with watch mode.
+- **Nodemon** - A utility that monitors for changes and automatically restarts the server.
+- **Rimraf** - A tool to remove files and directories.
 
-The API relies on MongoDB as the database backend. The connection to the database is established during server startup. MongoDB is used to store and retrieve data related to users and cars.
-Swagger Documentation
+For type checking and linting, the project uses TypeScript and ESLint with several related plugins and configurations.
 
-The API documentation is available using Swagger. You can access it by visiting the /swagger endpoint in your running application. This documentation makes it easier to understand and interact with the API endpoints.
-Getting Started
-
-    Install the required dependencies.
-    Ensure that MongoDB is running and accessible.
-    Set up your environment variables as specified in the configs module.
-    Run the server with npm start.
-    Access the API via the specified routes, and use Swagger for detailed documentation.
-
-Feel free to customize and expand the API as needed for your project. If you encounter any issues or have questions, refer to the error handling section or consult the project's developers for assistance.
+Feel free to explore and enhance this Node.js project according to your requirements. Good luck with your development!
